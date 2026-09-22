@@ -1,0 +1,32 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+
+# Debug-only controller & routes - not meant to reach production, kept
+# out of version control entirely even if the file reappears locally
+# during future development.
+app/Http/Controllers/Api/DebugController.php
+
+# Local Postman workspace data (may contain locally-captured tokens
+# from testing) - the actual API collection is published separately,
+# not tracked here.
+.postman/
