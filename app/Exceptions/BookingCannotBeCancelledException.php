@@ -6,7 +6,6 @@ namespace App\Exceptions;
 
 use Exception;
 
-
 class BookingCannotBeCancelledException extends Exception
 {
     public function __construct(string $message = 'This booking cannot be cancelled.')

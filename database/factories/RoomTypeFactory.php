@@ -26,7 +26,7 @@ class RoomTypeFactory extends Factory
             'name' => fake()->randomElement(['Deluxe Room', 'Suite Room', 'Standard Room', 'Superior Room']),
             'description' => fake()->sentence(),
             'price_per_night' => fake()->numberBetween(300000, 2000000),
-            'capacity' => fake()->numberBetween(1, 4)
+            'capacity' => fake()->numberBetween(1, 4),
         ];
     }
 }
