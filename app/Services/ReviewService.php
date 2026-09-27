@@ -68,7 +68,6 @@ class ReviewService
     }
 
     /**
-     *
      * @throws ReviewNotAllowedException
      */
     public function update(Review $review, array $data, User $actingUser): Review
@@ -93,7 +92,6 @@ class ReviewService
     }
 
     /**
-     *
      * @throws ReviewNotAllowedException
      */
     public function delete(Review $review, User $actingUser): void

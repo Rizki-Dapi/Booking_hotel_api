@@ -15,17 +15,16 @@ class HotelFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $hotel = Hotel::class;
 
     public function definition(): array
     {
         return [
-            'name' => fake()->company() . 'Hotel',
+            'name' => fake()->company().'Hotel',
             'description' => fake()->paragraph(),
             'address' => fake()->streetAddress(),
             'city' => fake()->city(),
-            'star_rating' => fake()->numberBetween(1, 5)
+            'star_rating' => fake()->numberBetween(1, 5),
         ];
     }
 }

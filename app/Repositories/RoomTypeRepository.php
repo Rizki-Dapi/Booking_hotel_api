@@ -16,7 +16,7 @@ class RoomTypeRepository implements RoomTypeRepositoryInterface
     public function listByHotel(int $hotelId, ?string $search = null): Collection
     {
         return RoomType::where('hotel_id', $hotelId)
-            ->when($search, fn($q, $name) => $q->where('name', 'ilike', "%{$name}%"))
+            ->when($search, fn ($q, $name) => $q->where('name', 'ilike', "%{$name}%"))
             ->get();
     }
 

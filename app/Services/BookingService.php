@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\BookingStatus;
 use App\Exceptions\BookingCannotBeCancelledException;
 use App\Exceptions\BookingCannotBeRescheduledException;
+use App\Exceptions\RoomNotAvailableException;
 use App\Models\Booking;
 use App\Models\User;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
@@ -25,7 +26,7 @@ class BookingService
 
     /**
      * @throws ModelNotFoundException
-     * @throws \App\Exceptions\RoomNotAvailableException
+     * @throws RoomNotAvailableException
      */
     public function createBooking(array $data, User $user): array
     {
@@ -63,9 +64,8 @@ class BookingService
     }
 
     /**
-     *
      * @throws BookingCannotBeRescheduledException
-     * @throws \App\Exceptions\RoomNotAvailableException
+     * @throws RoomNotAvailableException
      */
     public function reschedule(Booking $booking, array $data): array
     {
@@ -94,7 +94,7 @@ class BookingService
         if ($booking->status === BookingStatus::CONFIRMED && $priceChanged) {
             throw new BookingCannotBeRescheduledException(
                 'A paid booking can only be moved to dates with the same total price. '
-                    . 'Cancel this booking and create a new one instead.'
+                    .'Cancel this booking and create a new one instead.'
             );
         }
 

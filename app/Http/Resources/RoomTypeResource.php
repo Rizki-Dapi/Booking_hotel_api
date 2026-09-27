@@ -15,7 +15,7 @@ class RoomTypeResource extends JsonResource
             'description' => $this->description,
             'price_per_night' => (float) $this->price_per_night,
             'capacity' => $this->capacity,
-            'hotel' => $this->whenLoaded('hotel', fn() => [
+            'hotel' => $this->whenLoaded('hotel', fn () => [
                 'id' => $this->hotel->id,
                 'name' => $this->hotel->name,
                 'city' => $this->hotel->city,

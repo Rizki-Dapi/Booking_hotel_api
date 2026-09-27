@@ -43,7 +43,7 @@ class PaymentService
     public function handleWebhook(array $payload): void
     {
         if (! $this->midtransService->isSignatureValid($payload)) {
-            throw new PaymentSignatureInvalidException();
+            throw new PaymentSignatureInvalidException;
         }
 
         $payment = $this->paymentRepository->findByOrderId($payload['order_id'] ?? '');
@@ -55,7 +55,7 @@ class PaymentService
         $incomingStatus = $payload['transaction_status'] ?? null;
 
         if ($payment->status->value === $incomingStatus) {
-            throw new PaymentAlreadyProcessedException();
+            throw new PaymentAlreadyProcessedException;
         }
 
         $newStatus = PaymentStatus::from($incomingStatus);
@@ -109,7 +109,7 @@ class PaymentService
             return $this->createForBooking($booking);
         }
 
-        $newOrderId = $booking->booking_code . '-R' . strtoupper(Str::random(4));
+        $newOrderId = $booking->booking_code.'-R'.strtoupper(Str::random(4));
 
         $this->paymentRepository->updateOrderDetails($payment, $newOrderId, (float) $booking->total_price);
 

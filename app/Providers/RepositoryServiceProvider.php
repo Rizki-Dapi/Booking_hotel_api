@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\BookingRepository;
+use App\Repositories\HotelRepository;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\HotelRepositoryInterface;
 use App\Repositories\Interfaces\LogRepositoryInterface;
@@ -10,8 +12,6 @@ use App\Repositories\Interfaces\ReviewRepositoryInterface;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
 use App\Repositories\Interfaces\RoomTypeRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\BookingRepository;
-use App\Repositories\HotelRepository;
 use App\Repositories\LogRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\ReviewRepository;

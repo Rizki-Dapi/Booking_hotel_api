@@ -45,7 +45,7 @@ class ReviewSeeder extends Seeder
             $booking = Booking::firstOrCreate(
                 ['user_id' => $reviewer->id, 'room_id' => $room->id, 'check_in_date' => $checkIn],
                 [
-                    'booking_code' => 'BK-SEED' . strtoupper(Str::random(5)),
+                    'booking_code' => 'BK-SEED'.strtoupper(Str::random(5)),
                     'check_out_date' => $checkOut,
                     'total_price' => $roomType->price_per_night * 2,
                     'status' => BookingStatus::COMPLETED,

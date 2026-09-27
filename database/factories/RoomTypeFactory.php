@@ -14,7 +14,6 @@ class RoomTypeFactory extends Factory
     /**
      * @return array<string, mixed>
      */
-
     protected $model = RoomType::class;
 
     public function definition(): array

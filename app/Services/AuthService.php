@@ -44,7 +44,7 @@ class AuthService
     public function login(array $credentials): array
     {
         if (! $token = JWTAuth::attempt($credentials)) {
-            throw new InvalidCredentialsException();
+            throw new InvalidCredentialsException;
         }
 
         $user = JWTAuth::user();
@@ -130,7 +130,7 @@ class AuthService
         );
 
         if ($status !== Password::PASSWORD_RESET) {
-            throw new InvalidResetTokenException(); 
+            throw new InvalidResetTokenException;
         }
 
         $this->logRepository->record([

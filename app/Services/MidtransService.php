@@ -45,7 +45,7 @@ class MidtransService
                 report($loggingError);
             }
 
-            throw new MidtransTransactionFailedException();
+            throw new MidtransTransactionFailedException;
         }
     }
 
@@ -54,9 +54,9 @@ class MidtransService
         $expected = hash(
             'sha512',
             ($payload['order_id'] ?? '')
-                . ($payload['status_code'] ?? '')
-                . ($payload['gross_amount'] ?? '')
-                . config('midtrans.server_key')
+                .($payload['status_code'] ?? '')
+                .($payload['gross_amount'] ?? '')
+                .config('midtrans.server_key')
         );
 
         return hash_equals($expected, $payload['signature_key'] ?? '');

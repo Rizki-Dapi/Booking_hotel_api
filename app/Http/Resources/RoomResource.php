@@ -14,8 +14,8 @@ class RoomResource extends JsonResource
             'room_number' => $this->room_number,
             'floor' => $this->floor,
             'status' => $this->status,
-            'is_occupied' => $this->whenLoaded('bookings', fn() => $this->bookings->isNotEmpty()),
-            'room_type' => $this->whenLoaded('roomType', fn() => [
+            'is_occupied' => $this->whenLoaded('bookings', fn () => $this->bookings->isNotEmpty()),
+            'room_type' => $this->whenLoaded('roomType', fn () => [
                 'id' => $this->roomType->id,
                 'name' => $this->roomType->name,
                 'price_per_night' => (float) $this->roomType->price_per_night,

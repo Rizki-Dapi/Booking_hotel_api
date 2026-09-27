@@ -33,7 +33,7 @@ class BookingRepository implements BookingRepositoryInterface
                 ->where('check_out_date', '>', $data['check_in_date'])
                 ->pluck('room_id');
 
-            $availableRoom = $rooms->first(fn(Room $room) => ! $bookedRoomIds->contains($room->id));
+            $availableRoom = $rooms->first(fn (Room $room) => ! $bookedRoomIds->contains($room->id));
 
             if (! $availableRoom) {
                 throw new RoomNotAvailableException(
@@ -93,7 +93,7 @@ class BookingRepository implements BookingRepositoryInterface
                         });
                 });
             })
-            ->when($status, fn($q, $status) => $q->where('status', $status))
+            ->when($status, fn ($q, $status) => $q->where('status', $status))
             ->latest()
             ->paginate($perPage);
     }
@@ -114,7 +114,7 @@ class BookingRepository implements BookingRepositoryInterface
     {
         return Booking::with(['room.roomType.hotel', 'payment'])
             ->where('user_id', $userId)
-            ->when($statuses, fn($q, $statuses) => $q->whereIn('status', $statuses))
+            ->when($statuses, fn ($q, $statuses) => $q->whereIn('status', $statuses))
             ->latest()
             ->paginate($perPage);
     }
@@ -139,7 +139,7 @@ class BookingRepository implements BookingRepositoryInterface
     private function generateBookingCode(): string
     {
         do {
-            $code = 'BK-' . strtoupper(Str::random(8));
+            $code = 'BK-'.strtoupper(Str::random(8));
         } while (Booking::where('booking_code', $code)->exists());
 
         return $code;

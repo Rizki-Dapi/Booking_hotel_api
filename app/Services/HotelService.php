@@ -6,6 +6,7 @@ use App\Exceptions\ResourceInUseException;
 use App\Models\Hotel;
 use App\Repositories\Interfaces\HotelRepositoryInterface;
 use App\Repositories\Interfaces\LogRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -75,7 +76,7 @@ class HotelService
         ]);
     }
 
-    public function recommended(int $limit = 5): \Illuminate\Database\Eloquent\Collection
+    public function recommended(int $limit = 5): Collection
     {
         return $this->hotelRepository->recommended($limit);
     }

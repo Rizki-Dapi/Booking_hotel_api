@@ -12,7 +12,7 @@ class RoleMiddleware
     {
         $user = $request->user();
 
-        if (! $user || ! collect($roles)->contains(fn(string $role) => $user->hasRole($role))) {
+        if (! $user || ! collect($roles)->contains(fn (string $role) => $user->hasRole($role))) {
             return response()->json([
                 'error' => 'Forbidden',
                 'message' => 'You do not have access to this resource',

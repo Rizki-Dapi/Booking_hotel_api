@@ -3,6 +3,7 @@
 namespace App\Repositories\Interfaces;
 
 use App\Models\Hotel;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface HotelRepositoryInterface
@@ -19,5 +20,5 @@ interface HotelRepositoryInterface
 
     public function hasRoomTypes(Hotel $hotel): bool;
 
-    public function recommended(int $limit = 5): \Illuminate\Database\Eloquent\Collection;
+    public function recommended(int $limit = 5): Collection;
 }

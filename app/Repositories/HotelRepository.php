@@ -12,9 +12,9 @@ class HotelRepository implements HotelRepositoryInterface
     public function paginate(array $filters = [], int $perPage = 10): LengthAwarePaginator
     {
         return Hotel::query()
-            ->when($filters['city'] ?? null, fn($q, $city) => $q->where('city', 'ilike', "%{$city}%"))
-            ->when($filters['name'] ?? null, fn($q, $name) => $q->where('name', 'ilike', "%{$name}%"))
-            ->when($filters['min_star_rating'] ?? null, fn($q, $rating) => $q->where('star_rating', '>=', $rating))
+            ->when($filters['city'] ?? null, fn ($q, $city) => $q->where('city', 'ilike', "%{$city}%"))
+            ->when($filters['name'] ?? null, fn ($q, $name) => $q->where('name', 'ilike', "%{$name}%"))
+            ->when($filters['min_star_rating'] ?? null, fn ($q, $rating) => $q->where('star_rating', '>=', $rating))
             ->with('roomTypes')
             ->paginate($perPage);
     }

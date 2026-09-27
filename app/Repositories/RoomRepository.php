@@ -29,7 +29,7 @@ class RoomRepository implements RoomRepositoryInterface
     public function listByRoomType(int $roomTypeId, ?string $search = null, ?string $occupancyDate = null): Collection
     {
         return Room::where('room_type_id', $roomTypeId)
-            ->when($search, fn($q, $number) => $q->where('room_number', 'ilike', "%{$number}%"))
+            ->when($search, fn ($q, $number) => $q->where('room_number', 'ilike', "%{$number}%"))
             ->when($occupancyDate, function ($query, $date) {
                 $query->with(['bookings' => function ($bookingQuery) use ($date) {
                     $bookingQuery->whereNotIn('status', ['cancelled', 'expired'])

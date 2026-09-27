@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\Exceptions\RoomNotAvailableException;
 use App\Models\Booking;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -9,14 +10,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface BookingRepositoryInterface
 {
     /**
-     *
-     * @throws \App\Exceptions\RoomNotAvailableException
+     * @throws RoomNotAvailableException
      */
     public function createBooking(array $data): Booking;
 
     /**
-     * 
-     * @throws \App\Exceptions\RoomNotAvailableException
+     * @throws RoomNotAvailableException
      */
     public function reschedule(Booking $booking, string $checkIn, string $checkOut, float $totalPrice): Booking;
 

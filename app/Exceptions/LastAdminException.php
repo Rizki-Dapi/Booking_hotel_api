@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class LastAdminException extends Exception
 {
@@ -11,7 +12,7 @@ class LastAdminException extends Exception
         parent::__construct($message);
     }
 
-    public function render(): \Illuminate\Http\JsonResponse
+    public function render(): JsonResponse
     {
         return response()->json([
             'error' => 'Unprocessable Entity',
