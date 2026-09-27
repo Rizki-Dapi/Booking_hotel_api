@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
 
         $adminTest = User::firstOrCreate(
             [
-                'email' => 'adminTest@hotelbooking.test'
+                'email' => 'adminTest@hotelbooking.test',
             ],
             [
                 'name' => 'Admin Test',
@@ -32,8 +32,8 @@ class AdminSeeder extends Seeder
                 'password' => bcrypt('password'),
             ]
         );
-        if (! $adminTest->hasRole('admin')) {
-            $adminTest->assignRole('admin');
+        if (! $admin->hasRole('admin')) {
+            $admin->assignRole('admin');
         }
     }
 }

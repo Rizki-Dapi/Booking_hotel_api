@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class BookingCannotBeRescheduledException extends Exception
 {
@@ -13,7 +14,7 @@ class BookingCannotBeRescheduledException extends Exception
         parent::__construct($message);
     }
 
-    public function render(): \Illuminate\Http\JsonResponse
+    public function render(): JsonResponse
     {
         return response()->json([
             'error' => 'Unprocessable Entity',
