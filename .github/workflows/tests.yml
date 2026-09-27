@@ -1,38 +1,84 @@
-name: tests
+name: Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-
-permissions:
-  contents: read
+    branches: [main]
 
 jobs:
-  ci:
+  tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: hotel_booking_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, pdo_pgsql, pgsql, mongodb, redis
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Generate application keys for testing
+        run: |
+          php artisan key:generate --env=testing --force
+          php artisan jwt:secret --env=testing --force
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h 127.0.0.1 -p 5432 -U postgres; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+
+      - name: Run test suite
+        env:
+          DB_HOST: 127.0.0.1
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          MONGODB_URI: mongodb://127.0.0.1:27017
+        run: php artisan test
+
+  lint:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
+        uses: actions/checkout@v4
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
-          tools: composer:v2
+          php-version: "8.3"
           coverage: none
 
-      - name: Setup Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: '22'
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Setup Application
-        run: composer setup
-
-      - name: Run CI Checks
-        run: composer ci:check
+      - name: Check code style (Pint)
+        run: ./vendor/bin/pint --test

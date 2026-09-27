@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +17,7 @@ use Tests\TestCase;
 */
 
 pest()->extend(TestCase::class)
- // ->use(RefreshDatabase::class)
+    // ->use(RefreshDatabase::class)
     ->in('Feature');
 
 /*
@@ -47,4 +49,19 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function actingAsApi(User $user): TestCase
+{
+    $token = JWTAuth::fromUser($user);
+
+    return test()->withHeader('Authorization', "Bearer {$token}");
+}
+
+function createUserWithRole(string $role = 'client',  array $attributes = []): User
+{
+    $user = User::factory()->create($attributes);
+    $user->assignRole($role);
+
+    return $user;
 }
