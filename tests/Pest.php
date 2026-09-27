@@ -58,7 +58,7 @@ function actingAsApi(User $user): TestCase
     return test()->withHeader('Authorization', "Bearer {$token}");
 }
 
-function createUserWithRole(string $role = 'client',  array $attributes = []): User
+function createUserWithRole(string $role = 'client', array $attributes = []): User
 {
     $user = User::factory()->create($attributes);
     $user->assignRole($role);
