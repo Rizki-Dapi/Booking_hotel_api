@@ -49,12 +49,8 @@ jobs:
           php artisan key:generate --env=testing --force
           php artisan jwt:secret --env=testing --force
 
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          until pg_isready -h 127.0.0.1 -p 5432 -U postgres; do
-            echo "Waiting for postgres..."
-            sleep 2
-          done
+      - name: Prepare test database
+        run: php artisan migrate --force --env=testing
 
       - name: Run test suite
         env:
