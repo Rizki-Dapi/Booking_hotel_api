@@ -65,3 +65,5 @@ function createUserWithRole(string $role = 'client', array $attributes = []): Us
 
     return $user;
 }
+
+// test
