@@ -21,4 +21,6 @@ interface HotelRepositoryInterface
     public function hasRoomTypes(Hotel $hotel): bool;
 
     public function recommended(int $limit = 5): Collection;
+
+    public function invalidateCache(int $hotelId): void;
 }

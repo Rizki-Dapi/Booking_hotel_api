@@ -8,6 +8,7 @@ use App\Helpers\ProfanityFilter;
 use App\Models\Review;
 use App\Models\User;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
+use App\Repositories\Interfaces\HotelRepositoryInterface;
 use App\Repositories\Interfaces\LogRepositoryInterface;
 use App\Repositories\Interfaces\ReviewRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,6 +19,7 @@ class ReviewService
     public function __construct(
         private readonly ReviewRepositoryInterface $reviewRepository,
         private readonly BookingRepositoryInterface $bookingRepository,
+        private readonly HotelRepositoryInterface $hotelRepository,
         private readonly LogRepositoryInterface $logRepository,
     ) {}
 
@@ -59,6 +61,8 @@ class ReviewService
             'context' => ['review_id' => $review->id, 'booking_id' => $booking->id],
         ]);
 
+        $this->hotelRepository->invalidateCache($review->hotel_id);
+
         return $review;
     }
 
@@ -88,6 +92,8 @@ class ReviewService
             'context' => ['review_id' => $review->id, 'fields' => array_keys($data)],
         ]);
 
+        $this->hotelRepository->invalidateCache($updated->hotel_id);
+
         return $updated;
     }
 
@@ -107,5 +113,7 @@ class ReviewService
             'action' => 'review.deleted',
             'context' => ['review_id' => $review->id],
         ]);
+
+        $this->hotelRepository->invalidateCache($review->hotel_id);
     }
 }

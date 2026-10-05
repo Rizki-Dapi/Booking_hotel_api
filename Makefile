@@ -2,7 +2,8 @@
 	route-l route-c config-c resource trait-r file-m repo interface-r interface-s service \
 	req seeder test seed-r run-seeder test-r factory setup-packages install key-g jwt-secret \
 	run-q run-d pint cache-c optimize psql-sh mongo-sh midtrans provider config cors api \
-	exception dump
+	exception dump docker-up docker-down docker-build docker-logs docker-migrate docker-seed \
+	docker-artisan docker-sh
 
 # Run tinker (interactive REPL)
 tinker:
@@ -114,6 +115,9 @@ run-seeder:
 test-r:
 	php artisan test
 
+test-r-f:
+	php artisan test --filter $(name)
+
 # Create a new factory. Example: make factory name=Booking
 factory:
 	php artisan make:factory $(name)Factory
@@ -219,3 +223,41 @@ exception:
 # Regenerate the Composer autoloader
 dump:
 	composer dump-autoload
+
+# --- Docker ---
+
+# Build and start all containers (app, nginx, postgres, mongo, redis,
+# queue, scheduler) in the background.
+docker-up:
+	docker compose up -d --build
+
+# Stop and remove all containers (data in named volumes is preserved).
+docker-down:
+	docker compose down
+
+# Rebuild images without starting containers - useful after changing
+# the Dockerfile itself, not just application code.
+docker-build:
+	docker compose build --no-cache
+
+# Follow logs from all containers at once.
+docker-logs:
+	docker compose logs -f
+
+# Run migrations INSIDE the app container - the container's own PHP/DB
+# connection, not your WSL one. Run this once after the first docker-up.
+docker-migrate:
+	docker compose exec app php artisan migrate
+
+# Seed the database inside the app container.
+docker-seed:
+	docker compose exec app php artisan db:seed
+
+# Generic wrapper to run any artisan command inside the app container.
+# Example: make docker-artisan cmd="route:list"
+docker-artisan:
+	docker compose exec app php artisan $(cmd)
+
+# Open a shell inside the running app container.
+docker-sh:
+	docker compose exec app sh

@@ -30,3 +30,5 @@ app/Http/Controllers/Api/DebugController.php
 # from testing) - the actual API collection is published separately,
 # not tracked here.
 .postman/
+
+.env.testing
